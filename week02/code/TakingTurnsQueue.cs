@@ -47,7 +47,7 @@ public class TakingTurnsQueue
             }
 
             // Add code for person with infinite turns, 0 and negative turns
-            if (person.Turns == 0 || person.Turns < 0)
+            else if (person.Turns == 0 || person.Turns < 0)
             {
                 _people.Enqueue(person);
             }
