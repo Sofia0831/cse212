@@ -8,9 +8,12 @@
         Console.WriteLine("Test 1");
         var queue = new SimpleQueue();
         queue.Enqueue(100);
+
+        // add to fix
+        queue.Enqueue(101);
         var value = queue.Dequeue();
         Console.WriteLine(value);
-        // Defect(s) Found:
+        // Defect(s) Found:  trying to deqeueu at 1 instead of 0
 
         Console.WriteLine("------------");
 
@@ -19,16 +22,20 @@
         // Expected Result: It should display 200, then 300, then 400 in that order
         Console.WriteLine("Test 2");
         queue = new SimpleQueue();
-        queue.Enqueue(200);
-        queue.Enqueue(300);
+        //fix
+        //
         queue.Enqueue(400);
+
+        queue.Enqueue(300);
+        queue.Enqueue(200);
+        queue.Enqueue(100);
         value = queue.Dequeue();
         Console.WriteLine(value);
         value = queue.Dequeue();
         Console.WriteLine(value);
         value = queue.Dequeue();
         Console.WriteLine(value);
-        // Defect(s) Found: 
+        // Defect(s) Found: index also out of range for 3rd dequeue, numbers are enqueued at the beginning
 
         Console.WriteLine("------------");
 
@@ -44,7 +51,7 @@
         catch (IndexOutOfRangeException) {
             Console.WriteLine("I got the exception as expected.");
         }
-        // Defect(s) Found: 
+        // Defect(s) Found:
     }
 
     private readonly List<int> _queue = new();

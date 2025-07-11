@@ -3,7 +3,8 @@
 /// added and allows customers to be serviced.
 /// </summary>
 public class CustomerService {
-    public static void Run() {
+    public static void Run()
+    {
         // Example code to see what's in the customer service queue:
         // var cs = new CustomerService(10);
         // Console.WriteLine(cs);
@@ -11,24 +12,78 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Customer queue is less than 0
+        // Expected Result: 10
         Console.WriteLine("Test 1");
+        var cs = new CustomerService(-2);
+        Console.WriteLine($"size is {cs._maxSize}");
 
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Add customerservice with more than 0, 5
+        // Expected Result: 5
         Console.WriteLine("Test 2");
+        cs = new CustomerService(5);
+        Console.WriteLine($"size is {cs._maxSize}");
+
+
 
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
         // Add more Test Cases As Needed Below
+        // Test 3
+        // Scenario: Add a customer with details and then serve
+        // Expected Result: customer details + serve customer
+        Console.WriteLine("Test 3");
+        cs = new CustomerService(1);
+        var cust = new CustomerService.Customer("Xavier", "01K", "Broken Phone Screen");
+        Console.WriteLine($"Customer Details: {cust}");
+        cs.ServeCustomer();
+
+
+
+        Console.WriteLine("=================");
+
+
+        // Test 4
+        // Scenario: Add a new customer normally
+        // Expected Result: Display details and then Serve Customer
+        Console.WriteLine("Test 4");
+        cs = new CustomerService(5);
+        cs.AddNewCustomer();
+        Console.WriteLine($"customer details: {cs}");
+        cs.AddNewCustomer();
+        Console.WriteLine($"customer details: {cs}");
+
+
+        Console.WriteLine("=================");
+
+        // Test 5
+        // Scenario: Add more customer than queue
+        // Expected Result: Should be an error saying that queue is full
+        Console.WriteLine("Test 5");
+        cs = new CustomerService(1);
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        Console.WriteLine($"queue: {cs._maxSize}");
+
+        Console.WriteLine("=================");
+
+        // Test 6
+        // Scenario:
+        // Expected Result: 
+        Console.WriteLine("Test 6");
+        cs = new CustomerService(4);
+        cs.AddNewCustomer();
+        cs.ServeCustomer();
+
+        Console.WriteLine("=================");
+        
     }
 
     private readonly List<Customer> _queue = new();
@@ -67,7 +122,9 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        // Fix
+        if (_queue.Count >= _maxSize)
+        {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,9 +145,17 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
-        var customer = _queue[0];
-        Console.WriteLine(customer);
+        // Fix
+        if (_queue.Count == 0)
+        {
+            Console.WriteLine("All customers have been served, queue is empty");
+        }
+        else
+        {
+            var customer = _queue[0];
+            _queue.RemoveAt(0);
+            Console.WriteLine(customer);
+        }
     }
 
     /// <summary>

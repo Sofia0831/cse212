@@ -1,0 +1,7 @@
+What is an advantage of dynamic arrays compared to traditional, static arrays?
+- An advantage of dynamic arrays over traditional static arrays is that like its name suggests its dynamic which means it can grow or shrink compared to a static array which cannot. 
+Unlike static array that cannot grow, dynamic arrays have a flexible size and have the ability to expand so you don't need to know the size of the array in advance. This makes it efficient to use over fixed arrays.
+
+
+What is a disadvantage of dynamic arrays compared to traditional, static arrays?
+- While dynamic arrays are more flexible it can also be slower than static arrays, whose sizes are fixed and defined before runtime, because of memory allocation. When it runs out of space, it has to perform a costly operation, the resizing takes O(n) times. Static arrays dont do this so its performance it more consistent. Its better to use a static array when you know the exact size of the data you are going to use.
