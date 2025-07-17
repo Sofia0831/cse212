@@ -22,7 +22,41 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+
+        //store seen words
+        var seen = new HashSet<string>();
+
+        //store results
+        var resultPair = new List<string>();
+
+        foreach (string word in words)
+        {
+            //generate the reversed version of the word
+            char[] charArray = word.ToCharArray();
+            Array.Reverse(charArray);
+            string reversed = new string(charArray);
+
+            // handle duplicates
+            if (word == reversed)
+            {
+                continue;
+            }
+
+            // check if word is in seen
+            if (seen.Contains(reversed))
+            {
+                // if in seen format and add to resultPair and then remove from the seen set
+                resultPair.Add($"{reversed} & {word}");
+                seen.Remove(reversed);
+            }
+            else
+            {
+                seen.Add(word);
+            }
+        }
+        
+        return resultPair.ToArray();
+
     }
 
     /// <summary>
@@ -43,6 +77,22 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            const int columnIndex = 3;
+
+            if (fields.Length > columnIndex)
+            {
+                string degree = fields[columnIndex].Trim();
+
+                if (degrees.ContainsKey(degree))
+                {
+                    degrees[degree]++;
+                }
+                else
+                {
+                    degrees.Add(degree, 1);
+                }
+            }
+
         }
 
         return degrees;
@@ -67,7 +117,41 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        string normalizeWord1 = word1?.Replace(" ", "").ToLowerInvariant() ?? "";
+        string normalizeWord2 = word2?.Replace(" ", "").ToLowerInvariant() ?? "";
+
+        if (normalizeWord1.Length != normalizeWord2.Length)
+        {
+            return false;
+        }
+
+        var charCounts = new Dictionary<char, int>();
+
+        foreach (char c in normalizeWord1)
+        {
+            if (charCounts.ContainsKey(c))
+            {
+                charCounts[c]++;
+            }
+            else
+            {
+                charCounts.Add(c, 1);
+            }
+        }
+
+        foreach (char c in normalizeWord2)
+        {
+            if (!charCounts.ContainsKey(c) || charCounts[c] == 0)
+            {
+                return false;
+            }
+            else
+            {
+                charCounts[c]--;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
